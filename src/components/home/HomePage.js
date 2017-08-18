@@ -6,8 +6,6 @@ export default class HomePage extends Component {
         return (
             <div>
                 <Header/>
-                <div className="readable-body-wrapper">
-                </div>
             </div>
         )
     }
