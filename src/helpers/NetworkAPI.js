@@ -52,10 +52,10 @@ export const addPost = (formValues) => {
         deleted: false
     }
 
-    return fetch(`${api}/posts/`, {
+    return fetch(`${API}/posts/`, {
         method: 'POST',
         headers: {
-            ...headers,
+            ...HEADERS,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
@@ -64,7 +64,7 @@ export const addPost = (formValues) => {
 }
 
 export const deletePostById = (postId) =>
-    fetch(`${api}/posts/${postId}`, {
+    fetch(`${API}/posts/${postId}`, {
         method: 'DELETE',
-        headers: headers
+        headers: HEADERS
     })

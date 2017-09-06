@@ -1,6 +1,5 @@
-import types from './actionTypes';
-import NetworkAPI from '../helpers/NetworkAPI';
-import store from '../store';
+import * as types from './actionTypes';
+import * as NetworkAPI from '../helpers/NetworkAPI';
 
 export const fetchPosts = () => dispatch => {
     dispatch({ type: types.ALL_POST_FETCH_STARTED });
