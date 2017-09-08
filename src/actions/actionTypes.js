@@ -1,6 +1,19 @@
-export const ALL_POST_FETCH_STARTED = 'ALL_POST_BEING_FETCHED';
-export const ALL_POST_FETCHED = 'ALL_POST_FETCHED';
-export const ALL_POST_FETCH_FAILED = 'ALL_POST_FAILED';
-export const POST_UPVOTE = 'POST_UPVOTE';
-export const POST_DOWNVOTE = 'POST_DOWNVOTE';
-export const DELETE_POST = 'DELETE_POST';
+
+//related to category
+export const FETCH_CATEGORY = 'FETCH_CATEGORY'
+
+//related to comments
+export const FETCH_COMMENTS = 'FETCH_COMMENTS'
+export const ADD_COMMENT = 'ADD_COMMENT'
+export const UPDATE_COMMENT = 'UPDATE_COMMENT'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
+export const VOTE_COMMENT = 'VOTE_COMMENT'
+
+//related to posts
+export const FETCH_POSTS = 'FETCH_POSTS'
+export const GET_CATEGORY_POSTS = 'GET_CATEGORY_POSTS'
+export const ADD_POST = 'ADD_POST'
+export const UPDATE_POST = 'UPDATE_POST'
+export const DELETE_POST = 'DELETE_POST'
+export const VOTE_POST = 'VOTE_POST'
+export const SORT_POST = 'SORT_POST'

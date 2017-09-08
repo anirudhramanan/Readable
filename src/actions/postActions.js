@@ -1,35 +1,54 @@
-import * as types from './actionTypes';
-import * as NetworkAPI from '../helpers/NetworkAPI';
+import * as API from '../utils/NetworkAPI'
+import * as Types from './actionTypes.js';
 
-export const fetchPosts = () => dispatch => {
-    dispatch({ type: types.ALL_POST_FETCH_STARTED });
-    NetworkAPI.fetchPosts()
-        .then(res => {
-            dispatch({
-                type: types.ALL_POST_FETCHED,
-                data: res
-            });
-        })
-        .catch(() => dispatch({ type: types.ALL_POST_FETCH_FAILED }));
-};
+export const fetchAllPosts = () => {
+  return (dispatch) => {
+    API.fetchPosts().then(posts => {
+      dispatch({ type: Types.FETCH_POSTS, posts })
+    })
+  }
+}
 
-export const downVote = postId => dispatch => {
-    NetworkAPI.upvote(postId, 0)
-        .then(res => {
-            dispatch({ type: types.POST_DOWNVOTE, data: res });
-        });
-};
+export const fetchPostsByCategory = (category) => {
+  return (dispatch) => {
+    API.fetchPostsByCategory(category).then(posts => {
+      dispatch({ type: Types.GET_CATEGORY_POSTS, posts })
+    })
+  }
+}
 
-export const upVote = postId => dispatch => {
-    NetworkAPI.upvote(postId, 1)
-        .then(res => {
-            dispatch({ type: types.POST_UPVOTE, data: res });
-        });
-};
+export const createPost = (post, callback) => {
+  return (dispatch) => {
+    API.addPost(post).then(() => callback())
+    dispatch({ type: Types.ADD_POST, post })
+  }
+}
 
-export const deletePost = postId => dispatch => {
-    NetworkAPI.deletePostById(postId)
-        .then(() => {
-            dispatch({ type: types.DELETE_POST, data: postId });
-        });
-};
+export const updatePost = (postId, title, body, callback) => {
+  return (dispatch) => {
+    API.updatePost(postId, title, body).then(updatedPost => {
+      dispatch({ type: Types.UPDATE_POST, updatedPost, postId })
+    }).then(() => callback())
+  }
+}
+
+export const deletePost = (postId, callback) => {
+  return dispatch => {
+    API.deletePost(postId).then(() => callback())
+    dispatch({ type: Types.DELETE_POST, postId })
+  }
+}
+
+export const votePost = (postId, option) => {
+  return (dispatch) => {
+    API.votePost(postId, option).then(post => {
+      dispatch({ type: Types.VOTE_POST, postId, option })
+    })
+  }
+}
+
+export const sortPost = (sortKey) => {
+  return dispatch => {
+    dispatch({ type: Types.SORT_POST, sortKey })
+  }
+}
