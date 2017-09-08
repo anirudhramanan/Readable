@@ -26,7 +26,7 @@ class NewPost extends Component {
   render() {
     return (
       <form onSubmit={this.addNewPost}>
-        <h2>Create New Post</h2>
+        <h2>New Post</h2>
         <ul className="form-style-1">
           <li>
             <label>Name <span className="required">*</span></label>
