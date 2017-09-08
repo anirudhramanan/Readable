@@ -1,57 +1,85 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Route, Switch, withRouter } from 'react-router-dom';
-import { fetchPosts } from '../actions/postActions';
-import { getAllCategories } from '../actions/categoryActions';
-import HomePage from '../components/homepage/HomePage.js'
-import NewPost from '../components/posts/NewPost.js'
+import { Link, Route, withRouter, Switch } from 'react-router-dom'
+import '../App.css';
+import { connect } from 'react-redux'
+import { sortPost } from '../actions/postActions'
+import { fetchCategories } from '../actions/categoryActions'
+import NewPost from './post/NewPost'
+import NewComment from './comment/NewComment'
+import EditComment from './comment/EditComment'
+import EditPost from './post/EditPost'
+import HomePage from './home/HomePage'
+import PostDetail from './post/PostDetail'
+import LogoImage from '../images/readable-logo.png'
+import NewPostImage from '../images/newpost.png'
 
 class Index extends Component {
+  static propTypes = {
+    posts: PropTypes.array,
+    categories: PropTypes.array
+  }
 
-    static propTypes = {
-        posts: PropTypes.array,
-        categories: PropTypes.array,
-        fetchPosts: PropTypes.func.isRequired,
-        getAllCategories: PropTypes.func.isRequired
-    }
+  componentDidMount() {
+    this.props.fetchCategories()
+  }
 
-    componentDidMount() {
-        this.props.getAllCategories();
-        this.props.fetchPosts();
-    }
+  render() {
+    const { categories, sortPost } = this.props
 
-    render() {
-        return (
-            <div className="app">
-                {/* <Navbar history={this.props.history} categories={this.props.categories} /> */}
-                <div className="container">
-                    <Switch>
-                        <Route exact path="/" component={HomePage} />
-                        <Route path="/new" component={NewPost} />
-                        <Route path="/:categories" component={HomePage} />
-                        {/* <Route path="/post/:postId/edit" component={Edit} /> */}
-                        {/* <Route path="/:category/:postId" component={Post} /> */}
-                        {/* <Route path="/:category" component={Category} /> */}
-                    </Switch>
-                </div>
-            </div>
-        );
-    }
+    return (
+      <div className="App">
+        <div className="nav-header">
+          <Link className="home" to="/">
+            <img src={LogoImage} width="200" height="48" />
+          </Link>
+          <Link className="new-post" to="/new">
+            <img src={NewPostImage} width="40" height="40" />
+          </Link>
+        </div>
+
+        <div className="filters">
+          <div className="category-changer">
+            <p>Choose Category</p>
+            {categories && categories.map(category => (
+              <Link key={category.name} to={`/${category.path}`}>
+                <button>{category.name}</button>
+              </Link>
+            ))}
+          </div>
+
+          <div className="sort-changer">
+            <p>Sort By</p>
+            <button onClick={() => sortPost("timestamp")}>Time</button>
+            <button onClick={() => sortPost("voteScore")}>Vote Score</button>
+          </div>
+        </div>
+
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/new" component={NewPost} />
+          <Route exact path="/:category" component={HomePage} />
+          <Route exact path="/:category/:postId" component={PostDetail} />
+          <Route path="/:category/:postId/edit" component={EditPost} />
+          <Route path="/:category/:postId/comment" component={NewComment} />
+          <Route path="/:category/:postId/:commentId/edit" component={EditComment} />
+        </Switch>
+
+      </div>
+    );
+  }
 }
 
-const mapStateToProps = state => {
-    return {
-        posts: state.posts,
-        categories: state.categories
-    };
-};
+// map Redux state to this.props
+function mapStateToProps({ categories }) {
+  return {
+    categories: categories
+  }
+}
 
-const mapDispatchToProps = dispatch =>
-    bindActionCreators({
-        fetchPosts,
-        getAllCategories
-    }, dispatch);
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Index));
+// https://stackoverflow.com/questions/45056150/react-router-v4-not-working-with-redux
+// https://reacttraining.com/react-router/web/guides/redux-integration
+export default withRouter(connect(mapStateToProps, {
+  sortPost,
+  fetchCategories
+})(Index))
