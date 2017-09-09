@@ -70,15 +70,12 @@ class Index extends Component {
   }
 }
 
-// map Redux state to this.props
 function mapStateToProps({ categories }) {
   return {
     categories: categories
   }
 }
 
-// https://stackoverflow.com/questions/45056150/react-router-v4-not-working-with-redux
-// https://reacttraining.com/react-router/web/guides/redux-integration
 export default withRouter(connect(mapStateToProps, {
   sortPost,
   fetchCategories

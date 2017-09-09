@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import SinglePost from '../post/SinglePost'
 import { connect } from 'react-redux'
-import { fetchAllPosts } from '../../actions/postActions'
+import * as actions from '../../actions/postActions';
 
 class HomePage extends Component {
   static propTypes = {
@@ -30,4 +30,4 @@ function mapStateToProps({ posts }, { match }) {
   }
 }
 
-export default connect(mapStateToProps, { fetchAllPosts })(HomePage)
+export default connect(mapStateToProps, actions)(HomePage)

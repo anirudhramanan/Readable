@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import * as commentActions from '../../actions/commentActions'
 
 class EditComment extends Component {
+  
   componentDidMount() {
     this.props.fetchCommentForPost(this.props.match.params.postId)
   }

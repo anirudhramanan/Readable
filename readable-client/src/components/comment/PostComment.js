@@ -9,8 +9,11 @@ import ThumbsDown from '../../images/thumbs-down.png'
 class PostComment extends Component {
 
   onCommentDelete = (comment) => {
-    this.props.deleteComment(comment.id)
-    this.props.fetchCommentForPost(comment.parentId)
+    let parentId = comment.parentId
+    this.props.deleteComment(comment.id, () => {
+      this.props.history.push(`/post/${parentId}`)
+      this.props.fetchCommentForPost(comment.parentId)      
+    })
   }
 
   render() {

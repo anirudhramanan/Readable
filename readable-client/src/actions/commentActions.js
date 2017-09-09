@@ -17,9 +17,9 @@ export const createComment = (comment, parentId, callback) => {
   }
 }
 
-export const deleteComment = (commentId) => {
+export const deleteComment = (commentId, callback) => {
   return (dispatch) => {
-    API.deleteComment(commentId)
+    API.deleteComment(commentId).then(() => callback())
     dispatch({ type: Types.DELETE_COMMENT, commentId })
   }
 }

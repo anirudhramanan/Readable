@@ -26,7 +26,7 @@ class PostDetail extends Component {
   render() {
     const { post, comments, votePost, fetchAllPosts } = this.props
     if(!post) {
-      return ""
+      return <div>404 Post Not Found</div>
     }
     return (
       <div>
@@ -69,7 +69,7 @@ class PostDetail extends Component {
               <button onClick={(e) => this.onPostDelete(e)}>Delete</button>
             </div>
 
-        {post && comments && <PostComment category={post.category} comments={comments} />}
+        {post && comments && <PostComment category={post.category} comments={comments} history={this.props.history}/>}
       </div>
     )
   }

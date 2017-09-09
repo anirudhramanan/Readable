@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { formatTimestamp } from '../../utils/Utils'
 import { Link } from 'react-router-dom'
-import { fetchCommentForPost } from '../../actions/commentActions'
-import { fetchAllPosts, votePost } from '../../actions/postActions'
+import * as actions from '../../actions/commentActions'
 import ThumbsUp from '../../images/thumbs-up.png'
 import ThumbsDown from '../../images/thumbs-down.png'
 
@@ -57,4 +56,4 @@ function mapStateToProps({ comments }, { post }) {
   }
 }
 
-export default connect(mapStateToProps, {fetchAllPosts, votePost, fetchCommentForPost})(SinglePost)
+export default connect(mapStateToProps, actions)(SinglePost)
